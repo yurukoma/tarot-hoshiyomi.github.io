@@ -1,8 +1,9 @@
 {
   "name": "ゆるっと星読み・今日の一枚引きタロット",
   "short_name": "一枚引きタロット",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "./?v=2",
+"scope": "./",
+
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffd6e9",
