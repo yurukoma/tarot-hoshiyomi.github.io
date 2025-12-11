@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>今日の一枚引きタロット</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f7f5fb;
+      --card-bg: #ffffff;
+      --accent: #b688ff;
+      --accent-soft: #efe3ff;
+      --text-main: #2f2440;
+      --text-sub: #6e6287;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px; /* ★ 全体少し大きめ */
+      background: radial-gradient(circle at top, #fdfbff 0, #f7f5fb 40%, #f2eef9 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .app {
+      max-width: 520px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 26px 22px 20px;
+      box-shadow: 0 20px 40px rgba(101, 72, 157, 0.16);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(198, 164, 232, 0.2) 0, transparent 50%),
+        radial-gradient(circle at 90% 100%, rgba(255, 204, 229, 0.25) 0, transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      letter-spacing: 0.08em;
+    }
+
+    .title {
+      font-size: 1.5rem;  /* ★ タイトル大きく */
+      margin: 6px 0 4px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+    }
+
+    .card-area {
+      margin: 18px 0 22px;
+    }
+
+   .tarot-card {
+  background: linear-gradient(145deg, #ffd6e9, #ffeff7); /* ←濃いめピンク */
+  border-radius: 20px;
+  padding: 20px 18px 18px;
+  border: 1px solid rgba(255, 140, 180, 0.45); /* ピンク濃さに合わせる */
+  box-shadow:
+    0 10px 18px rgba(255, 150, 200, 0.30),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+  min-height: 150px;
+}
+
+
+
+    .tarot-card::before {
+      content: "✦";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 1.2rem;
+      color: rgba(198, 164, 232, 0.7);
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--text-sub);
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .label span {
+      font-size: 0.95rem;
+    }
+
+    .label small {
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    .card-name {
+      font-size: 1.35rem; /* ★ カード名くっきり */
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .orientation {
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      font-size: 1rem;       /* ★ 本文も少し大きめ */
+      line-height: 1.7;      /* 行間ゆったり */
+      color: var(--text-main);
+      white-space: pre-line;
+    }
+
+    .placeholder {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      padding: 18px 8px;
+    }
+
+    .placeholder span {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
+
+    .controls {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-main {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: radial-gradient(circle at 20% 0%, #ffe6f3 0, #d5b6ff 40%, #b998ff 100%);
+      color: #382a57;
+      box-shadow: 0 10px 20px rgba(115, 87, 179, 0.45);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    }
+
+    .btn-main:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(115, 87, 179, 0.58);
+      opacity: 0.96;
+    }
+
+    .btn-main:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(115, 87, 179, 0.4);
+      opacity: 0.92;
+    }
+
+    .btn-main:disabled {
+      opacity: 0.7;
+      cursor: default;
+      box-shadow: 0 6px 14px rgba(115, 87, 179, 0.25);
+    }
+
+    .btn-main span.icon {
+      font-size: 1.2rem;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    .shuffling {
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+/* シャッフル時の光る演出 */
+.shuffling {
+  animation: shake 0.6s ease-in-out infinite, glow 1.4s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 0px rgba(255, 150, 200, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(255, 170, 220, 0.45); }
+  100% { box-shadow: 0 0 0px rgba(255, 150, 200, 0.2); }
+}
+
+   
+ /* ★ カードを軽くゆらすアニメーション */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      50% { transform: translateX(3px); }
+      75% { transform: translateX(-3px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="tagline">ゆるっと星読み × タロット</div>
+      <h1 class="title">今日の一枚引き</h1>
+      <p class="subtitle">カードが映す、いまのあなたへのひとことメッセージ</p>
+    </header>
+
+    <main>
+      <section class="card-area">
+        <div id="cardContainer" class="tarot-card">
+          <div class="placeholder">
+            まだカードは出ていません。<br />
+            下のボタンを押して「今日の一枚」を引いてみてください。
+            <span>深呼吸して、心をふっとゆるめてからどうぞ🌙</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="controls">
+        <button id="drawButton" class="btn-main">
+          <span class="icon">🃏</span>
+          <span>今日の一枚を引く</span>
+        </button>
+        <p class="hint">※ 1日に何度引いてもOKですが、しっくりきたメッセージを一つ選んで過ごしてみてください。</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+   今日の一枚引きタロット / ゆるっと星読み
+  <br>
+  <a href="https://note.com/yuki906/n/n33ada81b76a0" 
+     style="color:#b688ff; text-decoration:none; font-size:0.85rem;">
+     ▶ noteプロフィールはこちら
+  </a>
+</footer>
+
+  </div>
+
+  <script>
+    // 大アルカナ22枚（メッセージは前回と同じ。ここは自由に書き換えてOK）
+    const cards = [
+      {
+        name: "0 愚者",
+        upright: "まだ形になっていない可能性に、風が入りはじめています。\n\n少しだけ予定をゆるめて、ピンときた方向に寄り道してみましょう。\n「ちゃんとしなきゃ」より「ちょっと面白そう」を選ぶ日。",
+        reversed: "焦って新しいことを始めるよりも、まずは足元の安心を整えるタイミング。\n\n今日は「無謀な一歩」より「準備の一歩」を大切にしてみてください。"
+      },
+      {
+        name: "I 魔術師",
+        upright: "今のあなたは、すでに必要な道具を持っています。\n\n完璧になるのを待つより、試しに一つ、小さく形にしてみましょう。",
+        reversed: "情報やアイデアが多すぎて、頭だけがフル回転しているかも。\n\n「本当にやりたい一つ」に絞るための、整理デーにしてみてください。"
+      },
+      {
+        name: "II 女教皇",
+        upright: "静かなところに、答えがあります。\n\n今日はすぐに動くより、感じたことを書き出したり、一人の時間を少しだけ増やしてみましょう。",
+        reversed: "考えすぎ・我慢のしすぎのサインかもしれません。\n\n「本当はどう感じている？」と、自分にだけは正直になってあげてください。"
+      },
+      {
+        name: "III 女帝",
+        upright: "がんばるよりも、「満たされる」ことが先の日。\n\nおいしいもの・好きな香り・心地よいものを、自分にプレゼントしてみましょう。",
+        reversed: "人のためにがんばりすぎて、自分のエネルギーがすり減っているかも。\n\n小さくていいので「今日はここまで」と決めて、自分に戻る時間を。"
+      },
+      {
+        name: "IV 皇帝",
+        upright: "あなたの中の「責任感」「リーダーシップ」が育っています。\n\n一つだけでいいので、今日“自分で決めること”を選んでみてください。",
+        reversed: "「ちゃんとしなきゃ」の鎧が重くなっているサイン。\n\n今日くらいは少し力を抜いて、人に頼る練習をしても大丈夫です。"
+      },
+      {
+        name: "V 教皇",
+        upright: "信頼できる人の言葉や、丁寧に積み重ねてきた習慣が助けになりそうです。\n\nひとりで抱えず、安心できる相手に相談してみてもOK。",
+        reversed: "「こうあるべき」に縛られていませんか？\n\nルールよりも、自分の心がホッとする選択を、一つだけ許可してみてください。"
+      },
+      {
+        name: "VI 恋人",
+        upright: "心がときめく方向に、小さく舵を切るタイミング。\n\n正解探しよりも、「好き」「うれしい」を手がかりに選んでみましょう。",
+        reversed: "誰かや何かに気をつかいすぎて、本心が見えにくくなっているかも。\n\n今日は「私、本当はどうしたい？」をゆっくり問い直してみて。"
+      },
+      {
+        name: "VII 戦車",
+        upright: "エネルギーが前向きに動き出すとき。\n\nやると決めたことを、一つだけ集中して進めてみましょう。スピードよりも“方向性”が大事な日。",
+        reversed: "がんばろうとする気持ちと、ブレーキを踏む気持ちが同時に働いていそうです。\n\n今日は一気に進むより「進まない理由」をやさしく眺めてみて。"
+      },
+      {
+        name: "VIII 力",
+        upright: "やさしさと強さが同時に発揮できるとき。\n\n無理に押し切らなくても、静かな自信が周りに伝わっていきます。",
+        reversed: "気力が少し消耗しているサイン。\n\n“気合い”ではなく“休む勇気”を選ぶことで、明日の力が戻ってきます。"
+      },
+      {
+        name: "IX 隠者",
+        upright: "一人でじっくり考える時間が、何よりの栄養になります。\n\nスマホや情報から少し離れて、自分の声を聴く時間をつくってみてください。",
+        reversed: "考えすぎて、かえって迷路にはいってしまっているかも。\n\n一人で抱えるより、信頼できる誰かに“今の気持ち”を話してみても大丈夫。"
+      },
+      {
+        name: "X 運命の輪",
+        upright: "タイミングの風がふっと動くとき。\n\n直感的に「いまだ」と思ったら、軽く手をあげてみましょう。小さなチャンスがつながっていきます。",
+        reversed: "「どうせ変わらない」と思ってしまっているだけかもしれません。\n\n大きな一歩でなくていいので、普段と少し違う選択を一つだけ試してみて。"
+      },
+      {
+        name: "XI 正義",
+        upright: "自分にも相手にも、フェアでありたい気持ちが高まりそうです。\n\n損得よりも「納得感」を大事にして選んでみてください。",
+        reversed: "頭での正しさと、心の本音がちょっとズレているのかも。\n\n今日は「本当は納得していないこと」に、そっと光をあててみましょう。"
+      },
+      {
+        name: "XII 吊るされた男",
+        upright: "今は「動けないように見える時間」かもしれません。\n\nでもその停止は、見方を変える準備期間。別の角度から物事を眺めてみて。",
+        reversed: "がまんが当たり前になっていませんか？\n\nもう古くなった役割や、抱えすぎているものを、少しずつ手放す合図です。"
+      },
+      {
+        name: "XIII 死神",
+        upright: "一区切りのタイミング。\n\n終わることは、悪いことではなく“スペースが空くこと”。そこに新しい風が入ってきます。",
+        reversed: "頭では終わらせたいのに、心が追いついていない状態かも。\n\n無理に決着をつけようとせず、「いまは整理の途中」と認めてあげて。"
+      },
+      {
+        name: "XIV 節制",
+        upright: "ほどよいペースと、自然な流れが戻ってくるとき。\n\n“ちょうどいい”バランスを探すつもりで、力を抜いて進んでみてください。",
+        reversed: "がんばりすぎ・詰め込みすぎのサイン。\n\n今日は、予定やタスクを少し減らして、心と体の余白を作ることを優先してみて。"
+      },
+      {
+        name: "XV 悪魔",
+        upright: "やめたいのにやめられないもの・つい手がのびるものに、光があたるタイミング。\n\n「ダメな自分」ではなく「今まで守ってくれたクセ」として眺めてみて。",
+        reversed: "しばらく自分を縛っていた何かから、少しずつ抜け出せそう。\n\n小さく距離をとる・回数を減らすなど、ゆるやかな卒業を意識してみて。"
+      },
+      {
+        name: "XVI 塔",
+        upright: "予定通りではない出来事があるかもしれません。\n\nそれは「もう合わなくなったカタチ」が壊れるサイン。深呼吸して、必要なものだけ拾い直せば大丈夫。",
+        reversed: "すでに心の中では薄々わかっていることを、見て見ぬふりをしているのかも。\n\n無理にキープするより、「壊れたらどうなるかな？」と想像してみて。"
+      },
+      {
+        name: "XVII 星",
+        upright: "ふっと心が軽くなるような、希望の光がともるとき。\n\n遠くのゴールを一気に目指すより、“今日できる小さな一歩”を大事にしてみて。",
+        reversed: "期待しすぎて疲れてしまった心を、そっと休ませるタイミング。\n\n「今あるもの」や「すでにできていること」に目を向けてみてください。"
+      },
+      {
+        name: "XVIII 月",
+        upright: "不安やモヤモヤは、間違いのサインではなく“繊細さのアンテナ”。\n\nはっきりしない状況の中でも、「いまの自分を守る選択」を心がけて。",
+        reversed: "想像がふくらみすぎて、必要以上に怖がっているかもしれません。\n\n事実と想像を紙に書き分けてみると、心が少し落ち着きそうです。"
+      },
+      {
+        name: "XIX 太陽",
+        upright: "あなたの中の元気さ・素直さが前に出てくるとき。\n\n難しく考えるより、「これ楽しい！」を選ぶほど、周りにも明るさが広がります。",
+        reversed: "がんばりすぎて、楽しさを後回しにしているサイン。\n\n小さなごほうびや、気分が晴れることを先にやってみてください。"
+      },
+      {
+        name: "XX 審判",
+        upright: "過去の経験が、形を変えてよみがえりそうなタイミング。\n\n昔の自分に「よくやってきたね」と言ってあげることで、新しい一歩が軽くなります。",
+        reversed: "「あのときこうしていれば…」という思いが、心のどこかに残っているのかも。\n\n過去を責めるより、「ここからどうしたい？」に意識を向けてみて。"
+      },
+      {
+        name: "XXI 世界",
+        upright: "一つのサイクルが、やさしく完結に向かっています。\n\n今までの自分の歩みに「よくここまで来たね」と拍手してあげる日。",
+        reversed: "あと一歩のところで、自分に厳しすぎているのかもしれません。\n\n完璧なゴールでなくても、“今のベスト”に丸をつけてあげてください。"
+      }
+    ];
+
+    const cardContainer = document.getElementById("cardContainer");
+    const drawButton = document.getElementById("drawButton");
+
+    let isDrawing = false;
+    const defaultButtonHTML = drawButton.innerHTML;
+
+    function actuallyDrawCard() {
+      const index = Math.floor(Math.random() * cards.length);
+      const isUpright = Math.random() < 0.5;
+
+      const card = cards[index];
+      const orientationText = isUpright ? "正位置" : "逆位置";
+      const messageText = isUpright ? card.upright : card.reversed;
+
+      cardContainer.classList.remove("shuffling");
+      cardContainer.innerHTML = `
+        <div class="label">
+          <small>今日のカード</small>
+          <span>🪄</span>
+          <small>${orientationText}</small>
+        </div>
+        <div class="card-name">${card.name}</div>
+        <div class="orientation">${orientationText}</div>
+        <div class="message">${messageText}</div>
+      `;
+      cardContainer.classList.remove("fade-in");
+      void cardContainer.offsetWidth; // 再アニメーション用
+      cardContainer.classList.add("fade-in");
+
+      drawButton.innerHTML = defaultButtonHTML;
+      drawButton.disabled = false;
+      isDrawing = false;
+    }
+
+    function startDraw() {
+      if (isDrawing) return;
+      isDrawing = true;
+
+      // ボタン表示を「シャッフル中…」に変更
+      drawButton.innerHTML = `
+        <span class="icon">🔮</span>
+        <span>シャッフル中…</span>
+      `;
+      drawButton.disabled = true;
+
+      // カードをゆらゆらさせてワクワクタイム
+      cardContainer.classList.remove("fade-in");
+      cardContainer.classList.add("shuffling");
+
+      // 3.0秒後に実際のカードを表示
+      setTimeout(actuallyDrawCard, 3000);
+    }
+
+    drawButton.addEventListener("click", startDraw);
+  </script>
+</body>
+</html>
