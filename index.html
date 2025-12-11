@@ -5,6 +5,10 @@
   <title>今日の一枚引きタロット</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+  <!-- PWA 用の設定 -->
+  <meta name="theme-color" content="#ffd6e9">
+  <link rel="manifest" href="manifest.webmanifest">
+ 
     :root {
       --bg: #f7f5fb;
       --card-bg: #ffffff;
@@ -467,4 +471,13 @@
     drawButton.addEventListener("click", startDraw);
   </script>
 </body>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+      });
+    }
+  </script>
+
 </html>
+
