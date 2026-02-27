@@ -1,39 +1,46 @@
-// 簡易キャッシュ
-const CACHE_NAME = 'yurutto-tarot-cache-v1';
-const URLS_TO_CACHE = [
-  './',
-  './index.html'
-];
+// sw.js（更新に強い版）
+const CACHE_NAME = "tarot-app-v1"; // ←更新したら v2, v3…に上げる
 
-// インストール
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(URLS_TO_CACHE);
-    })
-  );
+// できるだけキャッシュしない（更新優先）
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
 });
 
-// 有効化
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((name) => {
-          if (name !== CACHE_NAME) {
-            return caches.delete(name);
-          }
-        })
-      );
-    })
-  );
+self.addEventListener("activate", (event) => {
+  event.waitUntil((async () => {
+    // 古いキャッシュ削除
+    const keys = await caches.keys();
+    await Promise.all(keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : Promise.resolve())));
+    await self.clients.claim();
+  })());
 });
 
-// fetch 時キャッシュ or ネットワーク
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+// HTMLは“常にネット優先”（最新版を取りに行く）
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+
+  // GET以外は触らない
+  if (req.method !== "GET") return;
+
+  const url = new URL(req.url);
+
+  // 同一オリジンのみ対象
+  if (url.origin !== self.location.origin) return;
+
+  // HTMLはネット優先（更新が反映されやすい）
+  if (req.headers.get("accept")?.includes("text/html")) {
+    event.respondWith((async () => {
+      try {
+        const fresh = await fetch(req, { cache: "no-store" });
+        return fresh;
+      } catch (e) {
+        // オフライン時は最低限のフォールバック（キャッシュしてないので、そのままエラーでもOK）
+        return fetch(req);
+      }
+    })());
+    return;
+  }
+
+  // それ以外（画像など）は普通にネットから
+  event.respondWith(fetch(req));
 });
