@@ -591,14 +591,15 @@ drawMinor.addEventListener("click", () => startDraw("minor"));
   </script>
 </body>
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        //navigator.serviceWorker.register('./sw.js')
-      });
-    }
-  </script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js?v=1')
+    });
+  }
+</script>
 
 </html>
+
 
 
 
