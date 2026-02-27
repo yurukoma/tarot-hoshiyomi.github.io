@@ -423,18 +423,25 @@
         reversed: "あと一歩のところで、自分に厳しすぎているのかもしれません。\n\n完璧なゴールでなくても、“今のベスト”に丸をつけてあげてください。"
       }
     ];
-// 小アルカナ（まずはテスト用：2枚だけ）
 const minorCards = [
-  {
-    name: "ワンドのエース",
-    upright: "始まりの火。やる気の芽が灯る。小さく始めてOK。",
-    reversed: "気持ちが散りやすい日。焦らず一点集中で整えよう。"
-  },
-  {
-    name: "カップの2",
-    upright: "心が通うサイン。短い言葉でも、丁寧に伝えると◎。",
-    reversed: "すれ違い注意。決めつけず、確認の一言を添えてみて。"
-  }
+
+  // 🔥 ワンド
+  { name: "ワンドのエース", upright: "始まりの火。小さく灯せば十分。", reversed: "やる気が散りやすい日。まず一つに集中。" },
+  { name: "ワンドの2", upright: "未来を見据えるとき。計画を描こう。", reversed: "迷いが出やすい。決め急がなくていい。" },
+  { name: "ワンドの3", upright: "動き出した流れ。展望は明るい。", reversed: "準備不足かも。一度整えてから。" },
+  { name: "ワンドの4", upright: "安定と安心。ほっとできる時間。", reversed: "落ち着かない。基盤を見直して。" },
+  { name: "ワンドの5", upright: "意見のぶつかり合い。刺激になる。", reversed: "無理な競争は手放して。" },
+  { name: "ワンドの6", upright: "評価される兆し。小さな成功。", reversed: "自信を取り戻して。" },
+  { name: "ワンドの7", upright: "守る姿勢。あなたの立場を大切に。", reversed: "戦いすぎないこと。" },
+  { name: "ワンドの8", upright: "急展開。スピード感あり。", reversed: "焦りすぎ注意。" },
+  { name: "ワンドの9", upright: "あと少し。粘りどき。", reversed: "疲れが出ている。休もう。" },
+  { name: "ワンドの10", upright: "背負いすぎかも。手放して軽く。", reversed: "負担は減らせる。" },
+
+  { name: "ワンドのペイジ", upright: "純粋な好奇心。学びの芽。", reversed: "気持ちが続かない。" },
+  { name: "ワンドのナイト", upright: "情熱的な行動。勢いあり。", reversed: "突っ走りすぎ注意。" },
+  { name: "ワンドのクイーン", upright: "魅力と自信。自然体で輝く。", reversed: "自信が揺らぐ日。" },
+  { name: "ワンドのキング", upright: "リーダーシップ発揮。堂々と。", reversed: "強引にならないように。" }
+
 ];
 const cardContainer = document.getElementById("cardContainer");
 
@@ -530,5 +537,6 @@ drawMinor.addEventListener("click", () => startDraw("minor"));
   </script>
 
 </html>
+
 
 
