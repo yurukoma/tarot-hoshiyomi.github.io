@@ -281,10 +281,19 @@
       </section>
 
       <section class="controls">
-        <button id="drawButton" class="btn-main">
-          <span class="icon">🃏</span>
-          <span>今日の一枚を引く</span>
-        </button>
+       <div class="draw-buttons">
+
+  <button id="drawMajor" class="btn-main">
+    <span class="icon">🔮</span>
+    <span>魂メッセージ（大アルカナ）</span>
+  </button>
+
+  <button id="drawMinor" class="btn-main">
+    <span class="icon">🃏</span>
+    <span>日常ヒント（小アルカナ）</span>
+  </button>
+
+</div>
         <p class="hint">※ 1日に何度引いてもOKですが、しっくりきたメッセージを一つ選んで過ごしてみてください。</p>
       </section>
     </main>
@@ -414,61 +423,102 @@
         reversed: "あと一歩のところで、自分に厳しすぎているのかもしれません。\n\n完璧なゴールでなくても、“今のベスト”に丸をつけてあげてください。"
       }
     ];
+// 小アルカナ（まずはテスト用：2枚だけ）
+const minorCards = [
+  {
+    name: "ワンドのエース",
+    upright: "始まりの火。やる気の芽が灯る。小さく始めてOK。",
+    reversed: "気持ちが散りやすい日。焦らず一点集中で整えよう。"
+  },
+  {
+    name: "カップの2",
+    upright: "心が通うサイン。短い言葉でも、丁寧に伝えると◎。",
+    reversed: "すれ違い注意。決めつけず、確認の一言を添えてみて。"
+  }
+];
+const cardContainer = document.getElementById("cardContainer");
 
-    const cardContainer = document.getElementById("cardContainer");
-    const drawButton = document.getElementById("drawButton");
+const drawMajor = document.getElementById("drawMajor");
+const drawMinor = document.getElementById("drawMinor");
 
-    let isDrawing = false;
-    const defaultButtonHTML = drawButton.innerHTML;
+let isDrawing = false;
+
+// それぞれのボタンの元の表示を保存
+const defaultMajorHTML = drawMajor.innerHTML;
+const defaultMinorHTML = drawMinor.innerHTML;
 
     function actuallyDrawCard() {
-      const index = Math.floor(Math.random() * cards.length);
-      const isUpright = Math.random() < 0.5;
+  // モードに応じて山札を切り替える
+  const deck = (currentMode === "minor") ? minorCards : cards; // cards = 大アルカナ想定
 
-      const card = cards[index];
-      const orientationText = isUpright ? "正位置" : "逆位置";
-      const messageText = isUpright ? card.upright : card.reversed;
+  const index = Math.floor(Math.random() * deck.length);
+  const isUpright = Math.random() < 0.5;
 
-      cardContainer.classList.remove("shuffling");
-      cardContainer.innerHTML = `
-        <div class="label">
-          <small>今日のカード</small>
-          <span>🪄</span>
-          <small>${orientationText}</small>
-        </div>
-        <div class="card-name">${card.name}</div>
-        <div class="orientation">${orientationText}</div>
-        <div class="message">${messageText}</div>
-      `;
-      cardContainer.classList.remove("fade-in");
-      void cardContainer.offsetWidth; // 再アニメーション用
-      cardContainer.classList.add("fade-in");
+  const card = deck[index];
+  const orientationText = isUpright ? "正位置" : "逆位置";
+  const messageText = isUpright ? card.upright : card.reversed;
 
-      drawButton.innerHTML = defaultButtonHTML;
-      drawButton.disabled = false;
-      isDrawing = false;
-    }
+  const labelTitle = (currentMode === "minor") ? "日常ヒント" : "魂メッセージ";
+  const labelIcon  = (currentMode === "minor") ? "🃏" : "🔮";
 
-    function startDraw() {
-      if (isDrawing) return;
-      isDrawing = true;
+  cardContainer.classList.remove("shuffling");
+  cardContainer.innerHTML = `
+    <div class="label">
+      <small>${labelTitle}</small>
+      <span>${labelIcon}</span>
+      <small>${orientationText}</small>
+    </div>
+    <div class="card-name">${card.name}</div>
+    <div class="orientation">${orientationText}</div>
+    <div class="message">${messageText}</div>
+  `;
 
-      // ボタン表示を「シャッフル中…」に変更
-      drawButton.innerHTML = `
-        <span class="icon">🔮</span>
-        <span>シャッフル中…</span>
-      `;
-      drawButton.disabled = true;
+  cardContainer.classList.remove("fade-in");
+  void cardContainer.offsetWidth; // 再アニメーション用
+  cardContainer.classList.add("fade-in");
 
-      // カードをゆらゆらさせてワクワクタイム
-      cardContainer.classList.remove("fade-in");
-      cardContainer.classList.add("shuffling");
+  // ボタン表示を元に戻す
+  drawMajor.innerHTML = defaultMajorHTML;
+  drawMinor.innerHTML = defaultMinorHTML;
+  drawMajor.disabled = false;
+  drawMinor.disabled = false;
 
-      // 3.0秒後に実際のカードを表示
-      setTimeout(actuallyDrawCard, 3000);
-    }
+  isDrawing = false;
+}
+     // モードを記録する変数
+let currentMode = "major"; // 初期は大アルカナ
 
-    drawButton.addEventListener("click", startDraw);
+function startDraw(mode) {
+  if (isDrawing) return;
+  isDrawing = true;
+  currentMode = mode;
+
+  // 両方のボタンを一時的に無効化
+  drawMajor.disabled = true;
+  drawMinor.disabled = true;
+
+  // 押したほうのボタンだけ表示変更
+  if (mode === "major") {
+    drawMajor.innerHTML = `
+      <span class="icon">🔮</span>
+      <span>シャッフル中…</span>
+    `;
+  } else {
+    drawMinor.innerHTML = `
+      <span class="icon">🃏</span>
+      <span>シャッフル中…</span>
+    `;
+  }
+
+  cardContainer.classList.remove("fade-in");
+  cardContainer.classList.add("shuffling");
+
+  setTimeout(actuallyDrawCard, 3000);
+}
+
+// ボタンごとにモードを渡す
+drawMajor.addEventListener("click", () => startDraw("major"));
+drawMinor.addEventListener("click", () => startDraw("minor"));
   </script>
 </body>
   <script>
@@ -480,4 +530,5 @@
   </script>
 
 </html>
+
 
