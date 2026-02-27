@@ -498,6 +498,8 @@ const drawMajor = document.getElementById("drawMajor");
 const drawMinor = document.getElementById("drawMinor");
 
 let isDrawing = false;
+let currentMode = "major";
+let lastDrawnName = null;  // ←ここに追加
 
 // それぞれのボタンの元の表示を保存
 const defaultMajorHTML = drawMajor.innerHTML;
@@ -507,10 +509,20 @@ const defaultMinorHTML = drawMinor.innerHTML;
   // モードに応じて山札を切り替える
   const deck = (currentMode === "minor") ? minorCards : cards; // cards = 大アルカナ想定
 
-  const index = Math.floor(Math.random() * deck.length);
-  const isUpright = Math.random() < 0.5;
+let card;
+let tries = 0;
 
-  const card = deck[index];
+do {
+  const index = Math.floor(Math.random() * deck.length);
+  card = deck[index];
+  tries++;
+} while (card.name === lastDrawnName && tries < 10);
+
+lastDrawnName = card.name;
+
+const isUpright = Math.random() < 0.5;
+
+
   const orientationText = isUpright ? "正位置" : "逆位置";
   const messageText = isUpright ? card.upright : card.reversed;
 
@@ -569,6 +581,7 @@ function startDraw(mode) {
   cardContainer.classList.remove("fade-in");
   cardContainer.classList.add("shuffling");
 
+
   setTimeout(actuallyDrawCard, 3000);
 }
 
@@ -586,6 +599,7 @@ drawMinor.addEventListener("click", () => startDraw("minor"));
   </script>
 
 </html>
+
 
 
 
