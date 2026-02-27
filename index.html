@@ -425,22 +425,71 @@
     ];
 const minorCards = [
 
-  // 🔥 ワンド
-  { name: "ワンドのエース", upright: "始まりの火。小さく灯せば十分。", reversed: "やる気が散りやすい日。まず一つに集中。" },
-  { name: "ワンドの2", upright: "未来を見据えるとき。計画を描こう。", reversed: "迷いが出やすい。決め急がなくていい。" },
-  { name: "ワンドの3", upright: "動き出した流れ。展望は明るい。", reversed: "準備不足かも。一度整えてから。" },
-  { name: "ワンドの4", upright: "安定と安心。ほっとできる時間。", reversed: "落ち着かない。基盤を見直して。" },
-  { name: "ワンドの5", upright: "意見のぶつかり合い。刺激になる。", reversed: "無理な競争は手放して。" },
-  { name: "ワンドの6", upright: "評価される兆し。小さな成功。", reversed: "自信を取り戻して。" },
-  { name: "ワンドの7", upright: "守る姿勢。あなたの立場を大切に。", reversed: "戦いすぎないこと。" },
-  { name: "ワンドの8", upright: "急展開。スピード感あり。", reversed: "焦りすぎ注意。" },
-  { name: "ワンドの9", upright: "あと少し。粘りどき。", reversed: "疲れが出ている。休もう。" },
-  { name: "ワンドの10", upright: "背負いすぎかも。手放して軽く。", reversed: "負担は減らせる。" },
+ // 小アルカナ56枚（短文版）
+const minorCards = [
+  // 🔥 ワンド（行動・情熱）
+  { name: "ワンドのエース", upright: "始まりの火。小さく灯せば十分。", reversed: "気持ちが散りやすい日。まず一つに集中。" },
+  { name: "ワンドの2", upright: "未来を見据える。選択肢を広げよう。", reversed: "決め急がないで。視界を整える。" },
+  { name: "ワンドの3", upright: "流れが動く。展望は明るい。", reversed: "準備不足かも。段取りを見直して。" },
+  { name: "ワンドの4", upright: "安心の場。小さく祝う。", reversed: "落ち着かない。土台を整える。" },
+  { name: "ワンドの5", upright: "意見のぶつかり合い。刺激になる。", reversed: "争いを長引かせない。" },
+  { name: "ワンドの6", upright: "評価の兆し。小さな勝利。", reversed: "自信を取り戻して。" },
+  { name: "ワンドの7", upright: "守る力。自分の立場を大切に。", reversed: "戦いすぎ注意。休憩も強さ。" },
+  { name: "ワンドの8", upright: "急展開。スピードに乗る。", reversed: "焦りすぎ注意。確認を一つ。" },
+  { name: "ワンドの9", upright: "あと少し。粘りどき。", reversed: "疲れが出ている。休んでOK。" },
+  { name: "ワンドの10", upright: "背負いすぎ。荷物を減らす。", reversed: "負担は減らせる。任せよう。" },
+  { name: "ワンドのペイジ", upright: "好奇心の芽。学びが始まる。", reversed: "熱が続かない。小さく続ける。" },
+  { name: "ワンドのナイト", upright: "勢いよく進む。情熱で動く。", reversed: "突っ走り注意。深呼吸。" },
+  { name: "ワンドのクイーン", upright: "魅力と自信。自然体で輝く。", reversed: "自信が揺らぐ日。自分を温めて。" },
+  { name: "ワンドのキング", upright: "リーダーシップ。堂々と決める。", reversed: "強引にならないように。" },
 
-  { name: "ワンドのペイジ", upright: "純粋な好奇心。学びの芽。", reversed: "気持ちが続かない。" },
-  { name: "ワンドのナイト", upright: "情熱的な行動。勢いあり。", reversed: "突っ走りすぎ注意。" },
-  { name: "ワンドのクイーン", upright: "魅力と自信。自然体で輝く。", reversed: "自信が揺らぐ日。" },
-  { name: "ワンドのキング", upright: "リーダーシップ発揮。堂々と。", reversed: "強引にならないように。" }
+  // 💧 カップ（感情・つながり）
+  { name: "カップのエース", upright: "心が満ちる。やさしさが湧く。", reversed: "感情が溢れやすい。休ませよう。" },
+  { name: "カップの2", upright: "心が通う。対話が育つ。", reversed: "すれ違い注意。確認の一言。" },
+  { name: "カップの3", upright: "喜びの共有。仲間と笑う。", reversed: "気疲れ注意。無理に合わせない。" },
+  { name: "カップの4", upright: "いまは小休止。心の整理。", reversed: "マンネリ脱出。小さな変化を。" },
+  { name: "カップの5", upright: "失ったものに目が向く日。", reversed: "立て直し。残っている光に気づく。" },
+  { name: "カップの6", upright: "懐かしさ。優しい記憶。", reversed: "過去に寄りすぎないで。" },
+  { name: "カップの7", upright: "夢や選択肢が増える。", reversed: "幻想を減らし現実へ。" },
+  { name: "カップの8", upright: "次へ進む。手放しの決意。", reversed: "未練が残る。気持ちを言語化。" },
+  { name: "カップの9", upright: "満足感。小さな願いが叶う。", reversed: "満たそうとしすぎ注意。" },
+  { name: "カップの10", upright: "幸せの輪。家族や仲間の温度。", reversed: "理想を押し付けないで。" },
+  { name: "カップのペイジ", upright: "素直な気持ち。優しい知らせ。", reversed: "感情が不安定。落ち着く時間を。" },
+  { name: "カップのナイト", upright: "ロマン。丁寧なアプローチ。", reversed: "甘い言葉に流されない。" },
+  { name: "カップのクイーン", upright: "共感力。寄り添い上手。", reversed: "感じすぎ注意。境界線を。" },
+  { name: "カップのキング", upright: "落ち着いた愛。包容力。", reversed: "感情を抑え込みすぎない。" },
+
+  // 🌬 ソード（思考・言葉）
+  { name: "ソードのエース", upright: "切れ味。決断と真実。", reversed: "言葉が刺さりやすい。柔らかく。" },
+  { name: "ソードの2", upright: "保留も選択。静かに見極める。", reversed: "決められない疲れ。情報を絞る。" },
+  { name: "ソードの3", upright: "胸が痛む。正直な気づき。", reversed: "回復の兆し。癒しが進む。" },
+  { name: "ソードの4", upright: "休息。頭を止める。", reversed: "休めてない。強制オフを作る。" },
+  { name: "ソードの5", upright: "勝ち負けに注意。言い方を選ぶ。", reversed: "和解の道。引き際が賢い。" },
+  { name: "ソードの6", upright: "移動。心が軽くなる方向へ。", reversed: "同じ場所に留まりがち。小さく動く。" },
+  { name: "ソードの7", upright: "工夫と戦略。賢く抜け道。", reversed: "ごまかしは逆効果。正直に。" },
+  { name: "ソードの8", upright: "思い込みの檻。ほどく時。", reversed: "解放。できることが増える。" },
+  { name: "ソードの9", upright: "不安が膨らむ夜。休もう。", reversed: "心が落ち着く。小さな安心へ。" },
+  { name: "ソードの10", upright: "終わりの合図。一区切り。", reversed: "再生の兆し。ゆっくり立ち上がる。" },
+  { name: "ソードのペイジ", upright: "観察力。学びの刃。", reversed: "疑いすぎ注意。息を整える。" },
+  { name: "ソードのナイト", upright: "直球の行動。スピード重視。", reversed: "言い過ぎ注意。減速を。" },
+  { name: "ソードのクイーン", upright: "凛とした判断。境界線。", reversed: "冷たくなりすぎない。" },
+  { name: "ソードのキング", upright: "論理と公正。筋を通す。", reversed: "正しさで押し切らない。" },
+
+  // 🌿 ペンタクル（現実・お金・体）
+  { name: "ペンタクルのエース", upright: "現実の種。形にするチャンス。", reversed: "機会を見逃しやすい。確認を。" },
+  { name: "ペンタクルの2", upright: "やりくり上手。バランス調整。", reversed: "抱えすぎ。優先順位を。" },
+  { name: "ペンタクルの3", upright: "協力と技術。積み上げる。", reversed: "独りよがり注意。相談を。" },
+  { name: "ペンタクルの4", upright: "守り。貯める意識。", reversed: "握りしめすぎ。循環させる。" },
+  { name: "ペンタクルの5", upright: "不足感。助けを求めてOK。", reversed: "支援が見つかる。回復へ。" },
+  { name: "ペンタクルの6", upright: "与える・受け取る。循環。", reversed: "偏りに注意。対等さを。" },
+  { name: "ペンタクルの7", upright: "育てる時期。成果はこれから。", reversed: "見直し。やり方を変える。" },
+  { name: "ペンタクルの8", upright: "コツコツ練習。腕が上がる。", reversed: "惰性注意。目的を思い出す。" },
+  { name: "ペンタクルの9", upright: "自立と余裕。自分のペース。", reversed: "孤立注意。頼っていい。" },
+  { name: "ペンタクルの10", upright: "安定と継承。長期の安心。", reversed: "土台の点検。家のルール整理。" },
+  { name: "ペンタクルのペイジ", upright: "堅実な学び。現実を整える。", reversed: "先延ばし注意。1つだけやる。" },
+  { name: "ペンタクルのナイト", upright: "着実に進む。継続の力。", reversed: "停滞。小さく変化を。" },
+  { name: "ペンタクルのクイーン", upright: "心地よい暮らし。手入れ上手。", reversed: "世話焼き過ぎ注意。自分も満たす。" },
+  { name: "ペンタクルのキング", upright: "安定した采配。豊かさを管理。", reversed: "損得に寄りすぎない。" }
 
 ];
 const cardContainer = document.getElementById("cardContainer");
@@ -537,6 +586,7 @@ drawMinor.addEventListener("click", () => startDraw("minor"));
   </script>
 
 </html>
+
 
 
 
